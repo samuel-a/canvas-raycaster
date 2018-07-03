@@ -1,3 +1,5 @@
+// partially an implementation of the concepts expressed at https://lodev.org/cgtutor/raycasting.html
+
 let requestAnimationFrame = window.requestAnimationFrame; 
 let screen = document.getElementById('screen');
 let ctx = screen.getContext("2d");
@@ -47,7 +49,7 @@ function draw() {
 
         let deltaDistX = Math.sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
         let deltaDistY = Math.sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-        let perpWallDist;
+        let wallDist;
 
         let stepX;
         let stepY;
@@ -88,12 +90,12 @@ function draw() {
         }
 
         if (side == 0) {
-            perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
+            wallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
         } else {
-            perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
+            wallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
         }
 
-        let lineHeight = Math.floor(screen.height / perpWallDist);
+        let lineHeight = Math.floor(screen.height / wallDist);
 
         let drawStart = -lineHeight / 2 + screen.height / 2;
         if (drawStart < 0) drawStart = 0;
@@ -150,7 +152,7 @@ function update() {
 // establish controls through an eventListener
 
 let rotSpeed = 0.06; // values chosen arbitrarily
-let moveSpeed = 0.4 // 
+let movSpeed = 0.4; // 
 
 let oldDirX;
 let oldPlaneX;
@@ -159,13 +161,13 @@ document.addEventListener('keydown', function (event) {
 
     switch (event.key) {
         case "ArrowUp":
-            if (mapLayout[Math.floor(posY)][Math.floor((posX) + dirX * moveSpeed)] == 0) posX += dirX * moveSpeed;
-            if (mapLayout[Math.floor((posY) + dirY * moveSpeed)][Math.floor(posX)] == 0) posY += dirY * moveSpeed;
+            if (mapLayout[Math.floor(posY)][Math.floor((posX) + dirX * movSpeed)] == 0) posX += dirX * movSpeed;
+            if (mapLayout[Math.floor((posY) + dirY * movSpeed)][Math.floor(posX)] == 0) posY += dirY * movSpeed;
             break;
 
         case "ArrowDown":
-            if (mapLayout[Math.floor(posY)][Math.floor((posX) - dirX * moveSpeed)] == 0) posX -= dirX * moveSpeed;
-            if (mapLayout[Math.floor((posY) - dirY * moveSpeed)][Math.floor(posX)] == 0) posY -= dirY * moveSpeed;
+            if (mapLayout[Math.floor(posY)][Math.floor((posX) - dirX * movSpeed)] == 0) posX -= dirX * movSpeed;
+            if (mapLayout[Math.floor((posY) - dirY * movSpeed)][Math.floor(posX)] == 0) posY -= dirY * movSpeed;
             break;
 
         case "ArrowLeft":
