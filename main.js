@@ -1,11 +1,9 @@
-(function () {
-    let requestAnimationFrame = window.requestAnimationFrame;
-})();
-
+let requestAnimationFrame = window.requestAnimationFrame; 
 let screen = document.getElementById('screen');
 let ctx = screen.getContext("2d");
 
-// 17x17 grid in which non-zero numbers represent different wall colors
+
+// grid in which non-zero numbers represent different wall colors
 // zero represents a tile without a wall
 let mapLayout = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -33,6 +31,7 @@ let mapLayout = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+
 function draw() {
     for (let x = 0; x <= screen.width; x++) {
 
